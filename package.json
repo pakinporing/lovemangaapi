@@ -1,0 +1,26 @@
+{
+  "name": "lovemangaapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pakinporing/lovemangaapi.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pakinporing/lovemangaapi/issues"
+  },
+  "homepage": "https://github.com/pakinporing/lovemangaapi#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "mysql2": "^3.1.0",
+    "sequelize": "^6.28.0"
+  }
+}
