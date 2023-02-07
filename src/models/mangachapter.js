@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Manga = sequelize.define(
+  const MangaChapter = sequelize.define(
     'MangaChapter',
     {
       chapTer: {
@@ -15,16 +15,21 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           notEmpty: true
         }
-      },
-      mangaId: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notEmpty: true
-        }
       }
     },
     { underscored: true }
   );
-  return Manga;
+
+  MangaChapter.associate = (db) => {
+    console.log(db);
+    MangaChapter.belongsTo(db.Manga, {
+      foreignKey: {
+        name: 'mangaId',
+        allowNull: false
+      },
+      onDelete: 'RESTRICT'
+    });
+  };
+
+  return MangaChapter;
 };

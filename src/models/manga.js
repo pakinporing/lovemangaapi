@@ -26,5 +26,37 @@ module.exports = (sequelize, DataTypes) => {
     },
     { underscored: true }
   );
+
+  Manga.associate = (db) => {
+    Manga.hasMany(db.MangaChapter, {
+      foreignKey: {
+        name: 'mangaId',
+        allowNull: false
+      },
+      onDelete: 'RESTRICT'
+    });
+    Manga.hasMany(db.MangaTag, {
+      foreignKey: {
+        name: 'mangaId',
+        allowNull: false
+      },
+      onDelete: 'RESTRICT'
+    });
+    Manga.hasMany(db.Comment, {
+      foreignKey: {
+        name: 'mangaId',
+        allowNull: false
+      },
+      onDelete: 'RESTRICT'
+    });
+    Manga.hasMany(db.Favorite, {
+      foreignKey: {
+        name: 'mangaId',
+        allowNull: false
+      },
+      onDelete: 'RESTRICT'
+    });
+  };
+
   return Manga;
 };
