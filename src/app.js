@@ -8,6 +8,7 @@ const cors = require('cors');
 const authRoute = require('./routes/auth-route');
 const notFoundMiddleware = require('./middlewares/not-found');
 const errorMiddleware = require('./middlewares/error');
+const mangaChapterRoute = require('./routes/manga-chapter-route');
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/auth', authRoute);
+app.use('/manga-chapter', mangaChapterRoute);
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);
