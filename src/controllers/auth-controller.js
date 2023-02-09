@@ -6,6 +6,7 @@ const bcrypt = require('bcryptjs');
 
 const { User } = require('../models');
 const createError = require('../utils/create-error');
+const jwt = require('jsonwebtoken');
 
 exports.register = async (req, res, next) => {
   try {
@@ -31,6 +32,8 @@ exports.register = async (req, res, next) => {
   }
 };
 
+//////////////////////////////////////////////////////////////////////////////////
+
 exports.login = async (req, res, next) => {
   try {
     const value = validateLogin(req.body);
@@ -41,25 +44,17 @@ exports.login = async (req, res, next) => {
       }
     });
     if (!user) {
-      createError('invalid email or mobile or password', 400);
+      createError('invalid email or password', 400);
     }
 
     const isCorrect = await bcrypt.compare(value.password, user.password);
     if (!isCorrect) {
-      createError('invalid email or mobile or password', 400);
+      createError('invalid email or password', 400);
     }
 
     const accessToken = jwt.sign(
       {
-        id: user.id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        mobile: user.mobile,
-        profileImage: user.profileImage,
-        coverImage: user.coverImage,
-        createdAt: user.createdAt,
-        updatedAt: user.updatedAt
+        id: user.id
       },
       process.env.JWT_SECRET_KEY,
       {
