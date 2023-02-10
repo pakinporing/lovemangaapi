@@ -20,7 +20,7 @@ app.use(express.json());
 app.use('/auth', authRoute);
 app.use('/manga-chapter', mangaChapterRoute);
 app.use('/manga', mangaRoute);
-app.use('/allmanga', allMangaRoute);
+app.use('/allManga', allMangaRoute);
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);

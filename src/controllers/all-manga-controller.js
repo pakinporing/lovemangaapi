@@ -1,18 +1,9 @@
 const { Manga } = require('../models');
 const createError = require('../utils/create-error');
 
-exports.getAllMangaById = async (req, res, next) => {
+exports.getAllManga = async (req, res, next) => {
   try {
-    const { mangaId } = req.params;
-    if (!mangaId) {
-      createError('manga not found', 400);
-    }
-
-    const allManga = await Manga.findAll({
-      where: {
-        id: mangaId
-      }
-    });
+    const allManga = await Manga.findAll();
     if (!allManga) {
       createError('manga not found', 400);
     }

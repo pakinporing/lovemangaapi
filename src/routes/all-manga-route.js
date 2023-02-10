@@ -4,6 +4,6 @@ const AllMangaController = require('../controllers/all-manga-controller');
 
 const router = express.Router();
 
-router.get('/', AllMangaController.getAllMangaById);
+router.get('/manga', AllMangaController.getAllManga);
 
 module.exports = router;
