@@ -2,7 +2,7 @@ module.exports = (sequelize, DataTypes) => {
   const MangaChapter = sequelize.define(
     'MangaChapter',
     {
-      chapTer: {
+      chapter: {
         type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
