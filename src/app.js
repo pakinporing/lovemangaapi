@@ -8,6 +8,9 @@ const errorMiddleware = require('./middlewares/error');
 const mangaChapterRoute = require('./routes/manga-chapter-route');
 const mangaRoute = require('./routes/manga-route');
 const allMangaRoute = require('./routes/all-manga-route');
+const authenticateMiddleware = require('./middlewares/authenticate');
+
+const userRoute = require('./routes/user-route');
 
 // const { sequelize } = require('./models');
 // sequelize.sync({ alter: true });
@@ -21,6 +24,7 @@ app.use('/auth', authRoute);
 app.use('/manga-chapter', mangaChapterRoute);
 app.use('/manga', mangaRoute);
 app.use('/allManga', allMangaRoute);
+app.use('/users', authenticateMiddleware, userRoute);
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);

@@ -54,7 +54,16 @@ exports.login = async (req, res, next) => {
 
     const accessToken = jwt.sign(
       {
-        id: user.id
+        id: user.id,
+        firstName: user.firstName,
+        userName: user.userName,
+        lastName: user.lastName,
+        email: user.email,
+
+        profileImage: user.profileImage,
+
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt
       },
       process.env.JWT_SECRET_KEY,
       {
@@ -66,4 +75,8 @@ exports.login = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+};
+
+exports.getMe = (req, res, next) => {
+  res.status(200).json({ user: req.user });
 };
