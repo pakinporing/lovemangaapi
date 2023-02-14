@@ -24,9 +24,5 @@ exports.updateProfileImage = async (req, res, next) => {
     res.status(200).json({ message: 'success update' });
   } catch (err) {
     next(err);
-  } finally {
-    if (req.files.profileImage) {
-      fs.unlinkSync(req.files.profileImage[0].path);
-    }
   }
 };
