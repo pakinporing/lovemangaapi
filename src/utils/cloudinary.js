@@ -6,5 +6,5 @@ exports.upload = async (filePath) => {
     use_filename: true,
     overwrite: true
   });
-  console.log(result);
+  return result.secure_url;
 };
