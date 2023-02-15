@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
         name: 'mangaId',
         allowNull: false
       },
-      onDelete: 'RESTRICT'
+      onDelete: 'CASCADE'
     });
   };
 

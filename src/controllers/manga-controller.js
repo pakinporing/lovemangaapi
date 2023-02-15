@@ -29,6 +29,8 @@ exports.getMangaById = async (req, res, next) => {
   }
 };
 
+//////////////////////////////////////////////////////////////////////////////////////////
+
 exports.postManga = async (req, res, next) => {
   try {
     const mangaName = { mangaName: req.body.mangaName };
@@ -47,9 +49,7 @@ exports.postManga = async (req, res, next) => {
     const mangaImageUrl2 = await cloudinary.upload(mangaImageUrl.mangaImageUrl);
 
     mangaImageUrl = { mangaImageUrl: mangaImageUrl2 };
-    console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-    console.log(mangaImageUrl);
-    console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+
     const upmanga = await Manga.create({
       mangaName: mangaName.mangaName,
       description: description.description,
@@ -57,6 +57,30 @@ exports.postManga = async (req, res, next) => {
     });
 
     res.status(201).json({ message: 'postManga success. ' });
+  } catch (err) {
+    next(err);
+  }
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+exports.deleteMangaById = async (req, res, next) => {
+  try {
+    const { mangaId } = req.params;
+    if (!mangaId) {
+      createError('mangaId not found', 400);
+    }
+
+    const manga = await Manga.destroy({
+      where: {
+        id: mangaId
+      }
+    });
+    if (!manga) {
+      createError('manga not found', 400);
+    }
+
+    res.status(200).json({ message: 'deleteManga success. ' });
   } catch (err) {
     next(err);
   }
