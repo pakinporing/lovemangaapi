@@ -2,7 +2,6 @@ const express = require('express');
 
 const mangaController = require('../controllers/manga-controller');
 const upload = require('../middlewares/upload');
-const authenticateMiddleware = require('../middlewares/authenticate');
 
 const router = express.Router();
 

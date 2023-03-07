@@ -6,6 +6,7 @@ const { User } = require('../models');
 const cloudinary = require('../utils/cloudinary');
 
 exports.updateProfileImage = async (req, res, next) => {
+  // console.log(req.files.profileImage);
   try {
     let value;
     if (!req.files.profileImage) {
@@ -19,7 +20,9 @@ exports.updateProfileImage = async (req, res, next) => {
       value = { profileImage };
     }
 
-    await User.update(value, { where: { id: req.user.id } });
+    await User.update(value, {
+      where: { id: req.user.id }
+    });
 
     res.status(200).json({ message: 'success update' });
   } catch (err) {

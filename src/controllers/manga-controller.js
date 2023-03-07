@@ -8,7 +8,6 @@ exports.getMangaById = async (req, res, next) => {
     if (!mangaId) {
       createError('mangaId not found', 400);
     }
-
     const manga = await Manga.findAll({
       where: {
         id: mangaId
@@ -32,11 +31,14 @@ exports.getMangaById = async (req, res, next) => {
 //////////////////////////////////////////////////////////////////////////////////////////
 
 exports.postManga = async (req, res, next) => {
+  console.log('++++++++++++++++++++++++++++++++++++++++++++++++++');
+  console.log(req.file);
+  console.log('++++++++++++++++++++++++++++++++++++++++++++++++++');
   try {
     const mangaName = { mangaName: req.body.mangaName };
     const description = { description: req.body.description };
     let mangaImageUrl = { mangaImageUrl: req.file?.path };
-
+    // console.log(mangaImageUrl);
     const upManga = await Manga.findOne({
       where: {
         mangaName: mangaName.mangaName || ''
@@ -50,7 +52,7 @@ exports.postManga = async (req, res, next) => {
 
     mangaImageUrl = { mangaImageUrl: mangaImageUrl2 };
 
-    const upmanga = await Manga.create({
+    await Manga.create({
       mangaName: mangaName.mangaName,
       description: description.description,
       mangaImageUrl: mangaImageUrl.mangaImageUrl
