@@ -1,5 +1,7 @@
 const { MangaChapter } = require('../models');
 const createError = require('../utils/create-error');
+const cloudinary = require('../utils/cloudinary');
+const { Op } = require('sequelize');
 
 exports.getMangaByChapter = async (req, res, next) => {
   try {
@@ -11,8 +13,7 @@ exports.getMangaByChapter = async (req, res, next) => {
     //เอาไปหาในดาต้าเบส
     const foundChapter = await MangaChapter.findOne({
       where: {
-        chapTer: chapter,
-        mangaId
+        id: chapter
       }
     });
     if (!foundChapter) {
@@ -28,33 +29,37 @@ exports.getMangaByChapter = async (req, res, next) => {
 
 //////////////////////////////////////////////////////////////////////////////////////
 
-// exports.postMangaChapter = async (req, res, next) => {
-//   try {
-//     const mangaName = { mangaName: req.body.mangaName };
-//     const description = { description: req.body.description };
-//     let mangaImageUrl = { mangaImageUrl: req.file?.path };
+exports.postChapter = async (req, res, next) => {
+  try {
+    const { mangaId } = req.params;
+    const chapter = { chapter: req.body.chapter };
 
-//     const upManga = await MangaChapter.findOne({
-//       where: {
-//         mangaName: mangaName.mangaName || ''
-//       }
-//     });
-//     if (upManga) {
-//       createError('mangaChapter  is already in use', 400);
-//     }
+    let url = { url: req.file?.path };
 
-//     // const mangaImageUrl2 = await cloudinary.upload(mangaImageUrl.mangaImageUrl);
+    const upManga = await MangaChapter.findOne({
+      where: {
+        chapter: chapter.chapter,
+        mangaId: mangaId
+      }
+    });
 
-//     // mangaImageUrl = { mangaImageUrl: mangaImageUrl2 };
+    console.log('---------------------');
+    if (upManga) {
+      createError('chapter  is already in use', 400);
+    }
 
-//     const upmanga = await Manga.create({
-//       mangaName: mangaName.mangaName,
-//       description: description.description,
-//       mangaImageUrl: mangaImageUrl.mangaImageUrl
-//     });
+    const url2 = await cloudinary.upload(url.url);
 
-//     res.status(201).json({ message: 'postChapter success. ' });
-//   } catch (err) {
-//     next(err);
-//   }
-// };
+    url = { url: url2 };
+
+    await MangaChapter.create({
+      chapter: chapter.chapter,
+      mangaId: mangaId,
+      url: url.url
+    });
+
+    res.status(201).json({ message: 'postChapter success. ' });
+  } catch (err) {
+    next(err);
+  }
+};
