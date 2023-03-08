@@ -13,6 +13,7 @@ const authenticateMiddleware = require('./middlewares/authenticate');
 const userRoute = require('./routes/user-route');
 
 // const { sequelize } = require('./models');
+// sequelize.sync({ force: true });
 // sequelize.sync({ alter: true });
 
 const app = express();
