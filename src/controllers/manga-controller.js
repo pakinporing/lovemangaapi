@@ -1,3 +1,4 @@
+const fs = require('fs');
 const { Manga, MangaChapter } = require('../models');
 const createError = require('../utils/create-error');
 const cloudinary = require('../utils/cloudinary');
@@ -31,9 +32,9 @@ exports.getMangaById = async (req, res, next) => {
 //////////////////////////////////////////////////////////////////////////////////////////
 
 exports.postManga = async (req, res, next) => {
-  console.log('++++++++++++++++++++++++++++++++++++++++++++++++++');
-  console.log(req.file);
-  console.log('++++++++++++++++++++++++++++++++++++++++++++++++++');
+  // console.log('++++++++++++++++++++++++++++++++++++++++++++++++++');
+  // console.log(req.file);
+  // console.log('++++++++++++++++++++++++++++++++++++++++++++++++++');
   try {
     const mangaName = { mangaName: req.body.mangaName };
     const description = { description: req.body.description };
@@ -61,6 +62,15 @@ exports.postManga = async (req, res, next) => {
     res.status(201).json({ message: 'postManga success. ' });
   } catch (err) {
     next(err);
+  } finally {
+    if (req.file.path) {
+      fs.unlinkSync(req.file.path);
+      // console.log(
+      //   '+++++++++++++++++++++++++++--------------------------------+++'
+      // );
+      // console.log(req.file);
+      // console.log('+++++++++++++++++++++++++++++-------------+');
+    }
   }
 };
 

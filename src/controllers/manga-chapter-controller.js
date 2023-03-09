@@ -43,7 +43,6 @@ exports.postChapter = async (req, res, next) => {
       }
     });
 
-    console.log('---------------------');
     if (upManga) {
       createError('chapter  is already in use', 400);
     }
