@@ -62,3 +62,29 @@ exports.postChapter = async (req, res, next) => {
     next(err);
   }
 };
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+exports.patchChapter = async (req, res, next) => {
+  try {
+    const { mangaId } = req.params;
+    const { chapterId } = req.query;
+    const chapter = { chapter: req.body.chapter };
+
+    let url = { url: req.file?.path };
+
+    const url2 = await cloudinary.upload(url.url);
+
+    url = { url: url2 };
+
+    await MangaChapter.update(url, {
+      where: { id: req.query.chapter }
+    });
+    await MangaChapter.update(chapter, {
+      where: { id: req.query.chapter }
+    });
+
+    res.status(201).json({ message: 'patchChapter success. ' });
+  } catch (err) {
+    next(err);
+  }
+};

@@ -97,3 +97,25 @@ exports.deleteMangaById = async (req, res, next) => {
     next(err);
   }
 };
+///////////////////////////////////////////////////////////////////////////////////////
+
+exports.updateDescription = async (req, res, next) => {
+  console.log('*************--------------');
+  console.log(req.params);
+  console.log(req.body);
+  console.log('*************--------------');
+  try {
+    const { mangaId } = req.params;
+    const { description } = req.body;
+
+    await Manga.update(
+      { description: description },
+
+      { where: { Id: mangaId } }
+    );
+
+    res.status(200).json({ mes: 'update success' });
+  } catch (err) {
+    next(err);
+  }
+};

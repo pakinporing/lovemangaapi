@@ -11,5 +11,10 @@ router.post(
   upload.single('url'),
   mangaChapterController.postChapter
 );
+router.patch(
+  '/:mangaId',
+  upload.single('url'),
+  mangaChapterController.patchChapter
+);
 
 module.exports = router;

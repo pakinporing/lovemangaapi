@@ -18,4 +18,6 @@ router.delete(
   mangaController.deleteMangaById
 );
 
+router.patch('/:mangaId', mangaController.updateDescription);
+
 module.exports = router;
